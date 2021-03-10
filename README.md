@@ -3,8 +3,9 @@
 
 
 ## Materiały 1 (13.12.2020) [X]
+Learning To See, do przerobienia: filmy 1-4
 - https://www.youtube.com/playlist?list=PLiaHhY2iBX9ihLasvE8BKnS2Xg8AhY6iV
-Do przerobienia: filmy 1-4
+
 
 
 ## Materiały 2 (21.12.2020)[X]
