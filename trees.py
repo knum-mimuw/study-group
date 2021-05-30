@@ -5,9 +5,9 @@ from sklearn import datasets
 
 
 class Test:
-    def __init__(self, label, label_index):
-        self.label = label
-        self.target_feature = label_index
+    def __init__(self, labels, target_feature):
+        self.labels = labels
+        self.target_feature = target_feature
         self.decisions = None
         self.true_child = None
         self.false_child = None
@@ -21,7 +21,8 @@ class Test:
             return 0 if z*o == 0 else (-z*math.log2(z/total) - o*math.log2(o/total))/total
 
         set_sizes = {value: len(list(filter(lambda x: x[1] == value, vectors))) for value in set(values)}
-        no_ones = {value: sum(list(zip(*filter(lambda x: x[1] == value, vectors)))[1]) for value in set(values)}
+        print(list(zip(*list(filter(lambda x: x[1] == 1, vectors)))))
+        no_ones = {value: sum(list(zip(*list(filter(lambda x: x[1] == value, vectors))))[1]) for value in set(values)}
         return sum([ent(no_ones[value], set_sizes[value]) * set_sizes[value]/len(vectors) for value in set(values)])
 
     def fit(self, values, labels):
@@ -41,7 +42,9 @@ class IdentificationTree:
     def fit(self, data, labels):
         target_feature = np.argmax([-Test.entropy(data[:, i], labels) for i in range(data[0, :].shape[0])])
         self.root = Test(labels, target_feature)
-        data_labels = np.concatenate(data, labels, axis=1)
+        # print(data)
+        # print(labels)
+        data_labels = np.append(data, np.array([labels]).T, axis=1)
 
         def dfs(test, data_):
             if len(set(data_[:, -1])) == 1:
@@ -55,6 +58,31 @@ class IdentificationTree:
                 not_true_data = np.delete(not_true_data, test.target_feature, axis=1)
                 dfs(test.false_child, not_true_data)
 
+            true_data = np.array(list(filter(lambda x: x[test.target_feature], data_)))
+            true_data = np.delete(true_data, test.target_feature, axis=1)
+            not_true_data = np.array(list(filter(lambda x: not x[test.target_feature], data_)))
+            not_true_data = np.delete(not_true_data, test.target_feature, axis=1)
+
+            t_feature_true = np.argmax([-Test.entropy(true_data[:, i], labels) for i in range(true_data[0, :].shape[0]-1)])
+            t_feature_false = np.argmax([-Test.entropy(not_true_data[:, i], labels) for i in range(not_true_data[0, :].shape[0]-1)])
+            test.true_child = Test(true_data[:, -1], t_feature_true)
+            test.false_child = Test(not_true_data[:, -1], t_feature_false)
+            dfs(test.true_child, true_data)
+            dfs(test.false_child, not_true_data)
+
+        dfs(self.root, data_labels)
+
+    def predict(self, vector):
+        def predict_(test, v):
+            decision = test.predict(v)
+            if test.true_child is not None:
+                if decision:
+                    return predict_(test.true_child, v)
+                return predict_(test.false_child, v)
+            return decision
+
+        return predict_(self.root, vector)
+
 
 if __name__ == '__main__':
     iris = datasets.load_iris()
@@ -62,5 +90,8 @@ if __name__ == '__main__':
     tmp = iris['data']
     data = np.array([vectorized_map(tmp[:, i], np.mean(tmp[:, i])) for i in range(4)]).T
     labels = iris['target']
+    # print(iris)
     tree = IdentificationTree()
-    tree.fit(data, labels)
+    tree.fit(data[1:100], labels[1:100])
+    tree.predict(data[0])
+
