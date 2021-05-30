@@ -5,7 +5,7 @@ from sklearn import datasets
 
 
 class Test:
-    def __init__(self, label, label_index, trash={}):
+    def __init__(self, label, label_index):
         self.label = label
         self.target_feature = label_index
         self.decisions = None
@@ -54,9 +54,6 @@ class IdentificationTree:
                 not_true_data = filter(lambda x: not x[test.target_feature], data_)
                 not_true_data = np.delete(not_true_data, test.target_feature, axis=1)
                 dfs(test.false_child, not_true_data)
-
-
-
 
 
 if __name__ == '__main__':
