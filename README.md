@@ -35,7 +35,14 @@ Article: [Towards Data Science article](https://towardsdatascience.com/understan
 
 Code: SVD.py
 
-## Topic 5: Support Vector Machines
+## Topic 5: Genetic algorithms
+Lecture: [MIT OCW lecture on youtube](https://youtu.be/kHyNqSnzP8Y)
+
+Code: genetic.py 
+
+Code is using custom library for visualisation included in package animator
+
+## Topic 6: Support Vector Machines
 Lecture: [MIT OCW lecture on youtube](https://youtu.be/_PwhiWxHK8o)
 
 Article: [Towards Data Science article](https://towardsdatascience.com/build-a-classification-model-for-a-practical-use-case-670a1bb8dd11)
