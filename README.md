@@ -1,43 +1,34 @@
-# study-group
-2k20/21
+# Study Group
+Semestr letni 2020/2021
 
 
-## Materiały 1 (13.12.2020) [X]
-Learning To See, do przerobienia: filmy 1-4
-- https://www.youtube.com/playlist?list=PLiaHhY2iBX9ihLasvE8BKnS2Xg8AhY6iV
+## Topic 1: k-NN Classifier
+Lecture: [MIT OCW lecture on youtube](https://youtu.be/09mb78oiPkA)
+Code: knn_numpy.py
+Code in pure Python: knn_pure_python.py
+Data generator: data_processing.py
 
 
-
-## Materiały 2 (21.12.2020)[X]
-* Crash course pythona (tylko jeśli ktoś nie umie):
-https://www.stavros.io/tutorials/python/
-* Jak ktoś czuje niedosyt:
-  - https://diveintopython3.problemsolving.io/
-* ML:
-  - Learning2See: od 5 odcinka do końca (bez pisania kodu)
-  - https://www.kaggle.com/learn/intro-to-machine-learning
+## Topic 2: Identification Trees
+Lecture: [MIT OCW lecture on youtube](https://youtu.be/SXBG3RGr_Rc)
+Code: trees.py
 
 
-## Materiały 3 (30.12.2020) [X]
-* Intermediate machine learning
-  - https://www.kaggle.com/learn/intermediate-machine-learning
-**uwaga**: kursy kaggla są nastawione bardziej na praktykę niż na zrozumienie - proszę, jeśli coś nie jest jasne, abyście sprawdzali w innych źródłach o co chodzi, a w ostateczności zawsze możecie napisać na kanale #deleted-channel / #wspólne-rozkminy 
-* Python numpy (opcjonalne)
-  - https://www.machinelearningplus.com/python/101-numpy-exercises-python/
-^ tych ćwiczeń jest sporo - jeśli ktoś czuje niedosyt z numpy, można przerobić kilka(naście)  przykładów stąd (z naciskiem na kilka/kilkanaście - chyba, że ktoś chce więcej to zachęcamy).
+## Topic 3: Principal Component Analysis
+Lecture: [MIT OCW lecture on youtube](https://youtu.be/WW3ZJHPwvyg)
+Article: [Towards Data Science article](https://towardsdatascience.com/a-one-stop-shop-for-principal-component-analysis-5582fb7e0a9c)
+Code: pca.py
 
 
-## Materiały 4 (07.03.2021) [ ]
-Do następnego spotkania powtarzamy i podsumowujemy całą wiedzę z I semestru poprzez robienie konkursu:
-- https://www.kaggle.com/c/home-data-for-ml-course
-Najlepiej poczytać cudze notebooki, które są dostępne pod 
-- https://www.kaggle.com/c/home-data-for-ml-course/code?competitionId=10211&sortBy=scoreAscending,
-potworzyć własne notebooki, poeksperymentować, popatrzeć co poprawia, co pogarsza, ogólnie pobawić się na wiele sposobów z tym zadaniem.
+## Topic 4: Singular Value Decomposition
+Lecture: [MIT OCW lecture on youtube](https://youtu.be/rYz83XPxiZo)
+Lecture: [Elementary youtube video](https://www.youtube.com/watch?v=DG7YTlGnCEo&t=479s)
+Article: [Towards Data Science article](https://towardsdatascience.com/understanding-singular-value-decomposition-and-its-application-in-data-science-388a54be95d)
+Code: SVD.py
 
-Tutaj też jest kilka ciekawych notebooków (wzięte z tej listy wyżej):
-Dwa zaawansowane notebooki:
-- https://www.kaggle.com/angqx95/data-science-workflow-top-2-with-tuning
-- https://www.kaggle.com/datafan07/top-1-approach-eda-new-models-and-stacking
+## Topic 5: Support Vector Machines
+Lecture: [MIT OCW lecture on youtube](https://youtu.be/_PwhiWxHK8o)
+Article: [Towards Data Science article](https://towardsdatascience.com/build-a-classification-model-for-a-practical-use-case-670a1bb8dd11)
+Article: [Scholar article](https://sci-hub.se/https://doi.org/10.1007/978-0-387-30162-4_415)
 
-Łatwiejszy:
-- https://www.kaggle.com/mdmahmudferdous/housing-prices-competition-kaggle-learners-top-10
+
