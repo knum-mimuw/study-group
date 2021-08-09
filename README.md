@@ -49,4 +49,13 @@ Article: [Towards Data Science article](https://towardsdatascience.com/build-a-c
 
 Article: [Scholar article](https://sci-hub.se/https://doi.org/10.1007/978-0-387-30162-4_415)
 
+Article: [Towards Data Science article](https://towardsdatascience.com/solving-svm-stochastic-gradient-descent-and-hinge-loss-8e8b4dd91f5b)
+
+Notes: [Our one-page notes in PDF](https://drive.google.com/file/d/10NlMJRLu5JcFCf3AOaklhnPnA9xCMqeX/view?usp=sharing)
+
+## Topic 7: Naive Bayes Classifier
+
+Lecture: MIT OCW lecture on youtube [part 1](https://youtu.be/A6Ud6oUCRak) [part 2](https://youtu.be/EC6bf8JCpDQ)
+
+
 
