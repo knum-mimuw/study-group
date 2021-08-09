@@ -1,10 +1,15 @@
+import itertools
+
 import numpy as np
 import cvxopt
-import itertools
+
+from sklearn import datasets
+from sklearn.utils import shuffle
+
 import data_processing
 
 
-class SVM:
+class RetardedSVM:
     def __init__(self):
         self.w = None
         self.b = None
@@ -40,11 +45,70 @@ class SVM:
         return np.dot(self.w, v) + self.b > 0
 
 
+class SVM:
+    def __init__(self, softing_parameter=100, kernel=lambda x, y: np.dot(x, y)):
+        self.beta = None
+        self.C = softing_parameter
+        self.kernel = kernel
+
+    def gradient(self, x, y):
+        if 1-y*(self.kernel(self.beta, x)) <= 0:
+            return self.beta
+        return self.beta - self.C*y*x
+
+    def fit(self, data, labels, epochs=10000, learning_rate=lambda t: 1/(1000 + t)):
+        # print(labels)
+        classes = sorted(list(set(labels)))
+        if len(classes) != 2:
+            raise ValueError
+        pretty_labels = np.array(list(map(lambda x: -1 if x == classes[0] else 1, labels)))
+        self.beta = np.random.normal(0, 1, data.shape[1] + 1)
+
+        for i in range(epochs):
+            x, y = list(zip(data, pretty_labels))[np.random.randint(0, data.shape[0])]
+            x = np.append(x, 1)
+            self.beta -= learning_rate(i)*self.gradient(x, y)
+
+    def predict(self, x):
+        x = np.append(x, 1)
+        return 1 if self.kernel(x, self.beta) >= 0 else -1
+
+
 if __name__ == '__main__':
-    data = data_processing.data_generator(no_samples_per_class=2, no_classes=2, no_dimensions=2, centers=((0, 0), (15, 5)))
-    svm = SVM()
-    svm.fit(*data)
-    print(svm.predict(np.array([0, 0])))
+    # np.random.seed(1)
+    data = data_processing.data_generator(no_samples_per_class=10, no_classes=2, no_dimensions=2, centers=((0, 0), (15, 5)))
+    # data_processing.plot_data(data)
+    # svm = SVM(softing_parameter=10, kernel=lambda x, y: (np.dot(x, y) + 1000)**10)
+    svm = SVM(softing_parameter=10000, kernel=lambda x, y: np.dot(x, y))
+
+    # print(svm.predict(np.array([15, 5])))
+
+    data, target = datasets.load_iris(as_frame=True, return_X_y=True)
+    data['target'] = target
+    data = data[data['target'] < 2]
+    data = shuffle(data)
+    print(data.shape)
+    training_data = data.iloc[:30, :]
+    test_data = data.iloc[30:, :]
+    print(len(test_data))
+
+    training_labels = training_data['target'].to_numpy(copy=True)
+    test_labels = test_data['target'].to_numpy(copy=True)
+
+    training_data = training_data.drop('target', axis=1)
+    test_data = test_data.drop('target', axis=1)
+
+    training_data = training_data.to_numpy(copy=True)
+    test_data = test_data.to_numpy(copy=True)
+
+    svm.fit(training_data, training_labels, epochs=20000)
+
+    test_labels = np.where(test_labels == 0, -1, test_labels)
+    good = [svm.predict(x) == y for x, y in zip(test_data, test_labels)]
+    predictions = [svm.predict(x) for x in test_data]
+    print(len(predictions))
+    print(f'accuracy: {good.count(True)/len(good)}')
+
 
 
 
