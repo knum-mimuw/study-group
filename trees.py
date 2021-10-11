@@ -4,6 +4,7 @@ import math
 from sklearn import datasets
 import random
 
+
 class Test:
     def __init__(self, labels, target_feature):
         self.labels = labels
@@ -99,9 +100,9 @@ if __name__ == '__main__':
     tmp = iris['data']
     data = np.array([vectorized_map(tmp[:, i], np.mean(tmp[:, i])) for i in range(4)]).T
     labels = iris['target']
-    # print(iris)
+    print(data, labels)
     tree = IdentificationTree()
-    tree.fit(data[0:99], labels[0:99])
+    tree.fit(data[:99], labels[:99])
     print(tree.predict(data[100]))
 
 

@@ -1,6 +1,15 @@
+import itertools
+import copy
+
 import numpy as np
 import matplotlib.pyplot as plt
 import sklearn
+
+from sklearn.utils import shuffle
+from sklearn import datasets
+
+import boosting
+from sklearn.tree import DecisionTreeClassifier
 
 
 def data_generator(no_samples_per_class, no_classes, no_dimensions=2, centers=None, std_list=None, random_std=False,
@@ -24,5 +33,40 @@ def plot_data(data):
     plt.show()
 
 
+class CrossValidation:
+    def __init__(self, k, classifier):
+        self.k = k
+        self.classifiers = [copy.deepcopy(classifier) for _ in range(k)]
+
+    def evaluate(self, data, labels):
+        parts = []
+        accuracies = []
+        for i in np.linspace(0, len(data)//self.k*self.k, self.k, endpoint=False):
+            i = int(i)
+            parts.append(list(zip(data, labels))[i:i + len(data)//self.k])
+        for i in range(self.k):
+            # print(parts[:i]+parts[i+1:])
+            d, lb = list(map(np.array, zip(*(sum(parts[:i]+parts[i+1:], start=[])))))
+            self.classifiers[i].fit(d, lb)
+            # print(parts[i])
+            acc = np.mean([int(self.classifiers[i].predict(data_point) == label) for data_point, label in parts[i]])
+            accuracies.append(acc)
+        return np.mean(accuracies)
+
+
 if __name__ == '__main__':
-    plot_data(data_generator(25, 3, 2, centers=((0, 0), (15, 0), (2, 15))))
+    iris = datasets.load_iris()
+    vectorized_map = np.vectorize(lambda x, mean: x > mean)
+    tmp = iris['data']
+    data = np.array([vectorized_map(tmp[:, i], np.mean(tmp[:, i])) for i in range(4)]).T
+    labels = iris['target']
+    data, labels = list(zip(*shuffle(list(zip(data[:99], labels[:99])))))
+    data = np.array(data)
+    labels = np.array(labels)
+
+    classifier = boosting.AdaBoost(DecisionTreeClassifier, 5, .5, sklearn=True)
+    labels = classifier.change_labels(labels, possible_labels={1, 0, -1})
+
+    validator = CrossValidation(5, classifier)
+    print(validator.evaluate(data, labels))
+
